@@ -1,0 +1,46 @@
+# config/klebsiella_blee.toml
+# Parámetros biofísicos de referencia para Klebsiella pneumoniae BLEE+ (CTX-M/SHV-1)
+# Calibrado según directrices clínicas CLSI M100 / EUCAST v14.0
+
+[organism]
+name = "Klebsiella pneumoniae BLEE+"
+base_division_prob = 0.035        # min^-1 (Td ≈ 28 min; duplicación ligeramente más lenta)
+fitness_cost_per_mutation = 0.10  # 10% por pérdida de porinas OmpK35/36 y sobrecarga de eflujo
+maintenance_cost = 2              # Gasto por biosíntesis y secreción continua de betalactamasas
+division_cost = 32                # Mayor coste por síntesis de cápsula polisacárida
+min_res_for_division = 50         # Umbral crítico de reserva para iniciar citocinesis
+sos_max_mutation_prob = 0.038     # Tasa máxima inducida por SOS
+sos_lethal_fraction = 0.65        # 65% de mutaciones inducidas son deletéreas
+
+[pharmacokinetics]
+absorption_rate_ka = 0.035        # min^-1 (Tmax ≈ 85 min)
+elimination_rate_ke = 0.0052      # min^-1 (t1/2 ≈ 133 min)
+dose_interval_tau = 480           # Intervalo posológico: 8 horas (480 min)
+peak_concentration = 9.0          # Concentración pico tisular en µg/mL
+
+[[antibiotics]]
+name = "Ampicilina"
+code = "AMP"
+family = "Betalactam"
+disk_potency = 12.0
+# Resistencia intrínseca por betalactamasa SHV-1 constitutiva (CMI0 >= 32.0 µg/mL)
+mics = [32.0, 64.0, 128.0, 256.0, 512.0]
+mpcs = [128.0, 256.0, 512.0, 1024.0, 2048.0]
+
+[[antibiotics]]
+name = "Amoxicilina + Clavulanico"
+code = "AMC"
+family = "Betalactam_Inhibitor"
+disk_potency = 14.0
+# El ácido clavulánico inhibe la enzima basal, pero la hiperproducción eleva la CMI
+mics = [2.00, 4.00, 8.00, 16.0, 32.0]
+mpcs = [8.00, 16.0, 32.0, 64.0, 128.0]
+
+[[antibiotics]]
+name = "Ciprofloxacino"
+code = "CIP"
+family = "Fluoroquinolone"
+disk_potency = 10.0
+# CMI salvaje basal en enterobacterias nosocomiales con mutaciones progresivas en gyrA
+mics = [0.12, 0.25, 0.50, 1.50, 4.00]
+mpcs = [1.00, 2.00, 4.00, 12.0, 32.0]

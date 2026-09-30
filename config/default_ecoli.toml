@@ -1,0 +1,42 @@
+# config/default_ecoli.toml
+# Parámetros biofísicos de referencia para Escherichia coli ATCC 25922
+
+[organism]
+name = "Escherichia coli ATCC 25922"
+base_division_prob = 0.038        # min^-1 (~26 min por ciclo de duplicación)
+fitness_cost_per_mutation = 0.08  # 8% de penalización por cada alelo g adquirido
+maintenance_cost = 1              # Unidades de sustrato consumidas por minuto
+division_cost = 25                # Inversión de biomasa para citocinesis
+min_res_for_division = 40         # Umbral metabólico mínimo para fisión binaria
+sos_max_mutation_prob = 0.045     # Tasa máxima inducida por la ruta SOS de RecA
+sos_lethal_fraction = 0.70        # 70% de mutaciones inducidas son deletéreas
+
+[pharmacokinetics]
+absorption_rate_ka = 0.038        # min^-1 (Tmax tisular ≈ 80 min)
+elimination_rate_ke = 0.0048      # min^-1 (Semivida plasmática t1/2 ≈ 144 min)
+dose_interval_tau = 480           # Intervalo posológico: 8 horas (480 min)
+peak_concentration = 8.5          # Concentración pico tisular en µg/mL
+
+[[antibiotics]]
+name = "Ampicilina"
+code = "AMP"
+family = "Betalactam"
+disk_potency = 12.0
+mics = [0.25, 1.20, 3.50, 10.0, 35.0]
+mpcs = [2.20, 5.50, 14.0, 28.0, 65.0]
+
+[[antibiotics]]
+name = "Amoxicilina + Clavulanico"
+code = "AMC"
+family = "Betalactam_Inhibitor"
+disk_potency = 14.0
+mics = [0.40, 0.80, 1.50, 3.00, 8.00]
+mpcs = [3.00, 5.00, 8.00, 15.0, 30.0]
+
+[[antibiotics]]
+name = "Ciprofloxacino"
+code = "CIP"
+family = "Fluoroquinolone"
+disk_potency = 10.0
+mics = [0.06, 0.12, 0.25, 0.50, 1.00]
+mpcs = [0.50, 1.00, 2.00, 4.00, 8.00]

@@ -1,0 +1,56 @@
+# config/pseudomonas.toml
+# Parámetros biofísicos de referencia para Pseudomonas aeruginosa PAO1
+# Calibrado según directrices clínicas CLSI M100 / EUCAST v14.0
+
+[organism]
+name = "Pseudomonas aeruginosa PAO1"
+base_division_prob = 0.038        # min^-1 (Td ≈ 35 min; metabolismo oxidativo estricto)
+fitness_cost_per_mutation = 0.06  # Menor penalización relativa por expresión de bombas RND
+maintenance_cost = 2              # Consumo por fuerza protón-motriz sostenida (MexAB-OprM)
+division_cost = 30                # Coste estructural de membrana de baja permeabilidad
+min_res_for_division = 48         # Umbral crítico bioenergético
+sos_max_mutation_prob = 0.055     # Elevada plasticidad adaptativa bajo estrés oxidativo/SOS
+sos_lethal_fraction = 0.60        # Tolerancia superior a reordenamientos genómicos
+
+[pharmacokinetics]
+absorption_rate_ka = 0.038        # min^-1 (Tmax ≈ 80 min)
+elimination_rate_ke = 0.0045      # min^-1 (t1/2 ≈ 154 min)
+dose_interval_tau = 480           # Intervalo posológico: 8 horas (480 min)
+peak_concentration = 8.0          # Concentración pico tisular en µg/mL
+
+[[antibiotics]]
+name = "Ampicilina"
+code = "AMP"
+family = "Betalactam"
+disk_potency = 12.0
+# Resistencia intrínseca total (barrera de membrana + bomba MexAB-OprM + AmpC inducible)
+mics = [128.0, 256.0, 512.0, 1024.0, 2048.0]
+mpcs = [512.0, 1024.0, 2048.0, 4096.0, 8192.0]
+
+[[antibiotics]]
+name = "Amoxicilina + Clavulanico"
+code = "AMC"
+family = "Betalactam_Inhibitor"
+disk_potency = 14.0
+# Ineficaz: el ácido clavulánico NO inhibe la cefalosporinasa AmpC de P. aeruginosa
+mics = [64.0, 128.0, 256.0, 512.0, 1024.0]
+mpcs = [256.0, 512.0, 1024.0, 2048.0, 4096.0]
+
+[[antibiotics]]
+name = "Ciprofloxacino"
+code = "CIP"
+family = "Fluoroquinolone"
+disk_potency = 10.0
+# Quinolona de referencia clínica (ECOFF = 0.25 µg/mL; resistencia clínica > 0.5 µg/mL)
+mics = [0.25, 0.50, 1.00, 2.50, 8.00]
+mpcs = [2.00, 4.00, 8.00, 20.0, 64.0]
+
+[[antibiotics]]
+name = "Meropenem"
+code = "MEM"
+family = "Carbapenem"
+disk_potency = 10.0
+# Puntos de corte EUCAST: Sensible <= 2.0, Resistente > 8.0 µg/mL
+# g=0 (salvaje OprD+), g=1 (pérdida OprD), g=2 (eflujo MexAB), g>=3 (metalo-betalactamasa)
+mics = [0.50, 2.00, 4.00, 16.0, 64.0]
+mpcs = [2.50, 8.00, 16.0, 64.0, 256.0]
